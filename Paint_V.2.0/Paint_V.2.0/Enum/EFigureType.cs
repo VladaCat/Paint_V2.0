@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace Paint_V._2._0
 {
-    public interface IEngine
+    public enum EFigureType
     {
+        Dot,
+        Rect,
+        Ellipse,
+        Curve,
+        Line,
+        Triangle,
+        Hexagon,
+        RoundingRect
     }
+
 }

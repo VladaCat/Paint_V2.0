@@ -1,0 +1,9 @@
+C:\Users\vlada\OneDrive\Рабочий стол\Paint\Paint_V.2.0\Paint_V.2.0\obj\Debug\Paint_V.2.0.csprojAssemblyReference.cache
+C:\Users\vlada\OneDrive\Рабочий стол\Paint\Paint_V.2.0\Paint_V.2.0\obj\Debug\Paint_V._2._0.MainForm.resources
+C:\Users\vlada\OneDrive\Рабочий стол\Paint\Paint_V.2.0\Paint_V.2.0\obj\Debug\Paint_V._2._0.Properties.Resources.resources
+C:\Users\vlada\OneDrive\Рабочий стол\Paint\Paint_V.2.0\Paint_V.2.0\obj\Debug\Paint_V.2.0.csproj.GenerateResource.cache
+C:\Users\vlada\OneDrive\Рабочий стол\Paint\Paint_V.2.0\Paint_V.2.0\bin\Debug\Paint_V.2.0.exe.config
+C:\Users\vlada\OneDrive\Рабочий стол\Paint\Paint_V.2.0\Paint_V.2.0\bin\Debug\Paint_V.2.0.exe
+C:\Users\vlada\OneDrive\Рабочий стол\Paint\Paint_V.2.0\Paint_V.2.0\bin\Debug\Paint_V.2.0.pdb
+C:\Users\vlada\OneDrive\Рабочий стол\Paint\Paint_V.2.0\Paint_V.2.0\obj\Debug\Paint_V.2.0.exe
+C:\Users\vlada\OneDrive\Рабочий стол\Paint\Paint_V.2.0\Paint_V.2.0\obj\Debug\Paint_V.2.0.pdb

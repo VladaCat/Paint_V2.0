@@ -5,30 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NEW_PAINT
+namespace Paint_V._2._0
 {
     public class PaintGraphics : IPaintGraphics
     {
-        Bitmap b;
-        Graphics g;
-        public void MyDrawLine(int ColorR, int ColorG, int ColorB, int Thickness, int x1, int y1, int x2, int y2)
-        {
-            MyColorRGB c;
-            MyPen p;
-            c = MyColorRGB.FromArgb(ColorR, ColorG, ColorB);
-            p = MyPen(c, Thickness);
-            g.DrawLine(p, x1, y1, x2, y2);
-        }
-        public void MyDrawEllipse(int ColorR, int ColorG, int ColorB, int Thickness, int x1, int y1, int x2, int y2)
-        {
-        }
+        private Size _sizeOfPictureBox;
 
-        public void MyDrawRectangle(int ColorR, int ColorG, int ColorB, int Thickness, int x1, int y1, int x2, int y2)
+        public PaintGraphics(Size _sizeOfPictureBox) 
         {
-        }
-
-        public void MyDrawFillEllipse(int ColorR, int ColorG, int ColorB, int Thickness, int x1, int y1, int x2, int y2)
-        {
+            this._sizeOfPictureBox = _sizeOfPictureBox;
         }
 
         public void MyDrawImage(object bitmap, int w, int h)
@@ -37,12 +22,77 @@ namespace NEW_PAINT
 
         public void MyDrawFromImage(object bitmap)
         {
+
         }
 
-        public void Init(int w, int h)
+        public void Init(int w, int h) //for fixing lags
         {
-            b = new Bitmap(w, h);
-            g = Graphics.FromImage(b);
+            //_bitmap = new Bitmap(w, h);
+            //_graphics = Graphics.FromImage(_bitmap);
+        }
+
+        public void MyDrawFigure(IFigure figure, Graphics graphics)
+        {
+            if (figure==null) //костыль
+            { 
+                return;
+            }
+            if (figure.IsSelected)
+            {
+                Pen SelectionPen = new Pen(Color.Black);
+                SelectionPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+                graphics.DrawRectangle(SelectionPen,
+               figure.X,
+               figure.Y,
+               figure.Width,
+               figure.Heigth);
+            }
+           
+            switch (figure.FigureType)
+            {
+                case EFigureType.Dot:
+                    graphics.FillEllipse(new SolidBrush(Color.FromArgb(figure.MyColorARGB)),
+                        figure.X,
+                        figure.Y,
+                        figure.Width,
+                        figure.Heigth);
+                    break;
+                case EFigureType.Rect:
+                    break;
+                case EFigureType.Ellipse:
+                    break;
+                case EFigureType.Curve:
+                    break;
+                case EFigureType.Line:
+                    break;
+                case EFigureType.Triangle:
+                    break;
+                case EFigureType.Hexagon:
+                    break;
+                case EFigureType.RoundingRect:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public Bitmap MyDrawFigures(Storage storage)
+        {
+            Bitmap _bitmap = new Bitmap(_sizeOfPictureBox.Width,_sizeOfPictureBox.Height);
+            Graphics graphics = Graphics.FromImage(_bitmap);
+            if (storage._figureHistory.Count!=0 && storage._figureHistory.Last().Count != 0) 
+            {
+                foreach (var figure in storage._figureHistory.Last())
+                {
+                    MyDrawFigure(figure, graphics);
+                }
+               
+            }
+            if (storage.DrawingFigure!=null) 
+            {
+                MyDrawFigure(storage.DrawingFigure, graphics);
+            }
+            return _bitmap;
         }
     }
 }
