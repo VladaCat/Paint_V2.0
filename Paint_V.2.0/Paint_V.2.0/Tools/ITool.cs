@@ -11,11 +11,11 @@ namespace Paint_V._2._0
         CreateDot,
         CreateLine,
         CreateEllipse,
-        CreateRect,
+        CreateRectangle,
         CreateCurve,
         CreateTiangle,
         CreateHexagon,
-        CreateRoundingRect,
+        CreateRoundingRectangle,
         Select,
         Move
     }

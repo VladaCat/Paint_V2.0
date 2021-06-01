@@ -70,10 +70,6 @@ namespace Paint_V._2._0
         {
             foreach (var figure in GetCurrentFigures())
             {
-                if (figure == null) //костыль
-                {
-                    return;
-                }
                 if (figure.IsSelected)
                 {
                     figure.Thickness = Thickness;
@@ -85,10 +81,6 @@ namespace Paint_V._2._0
         {
             foreach (var figure in GetCurrentFigures())
             {
-                if (figure == null) //костыль
-                {
-                    return;
-                }
                 if (figure.IsSelected)
                 {
                     figure.MyColorARGB = MyColorARGB;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Paint_V._2._0.Figures;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -69,26 +70,21 @@ namespace Paint_V._2._0
                 case EIntaractionModes.CreateLine:
                     break;
                 case EIntaractionModes.CreateEllipse:
-                    _figure = new Ellipse(X,Y,0,0,MyColorARGB,Thickness);//0,0 потому что только начинаем создавать
+                    _figure = new Ellipse(X, Y, 0, 0, MyColorARGB, Thickness);//0,0 потому что только начинаем создавать
                     break;
-                case EIntaractionModes.CreateRect:
+                case EIntaractionModes.CreateRectangle:
+                    _figure = new Rectangle(X, Y, 0, 0, MyColorARGB, Thickness);
                     break;
                 case EIntaractionModes.CreateCurve:
                     _figure = new Curve(X,Y,MyColorARGB,Thickness);
                     break;
-                case EIntaractionModes.CreateTiangle:
-                    break;
                 case EIntaractionModes.CreateHexagon:
                     break;
-                case EIntaractionModes.CreateRoundingRect:
+                case EIntaractionModes.CreateRoundingRectangle:
                     break;
                 case EIntaractionModes.Select:
                     foreach (var figure in _storage._figureHistory[_storage._currentIndex])//из приколов, если фигуры лежат одна на другой->выделяются обе
                     {
-                        if (figure==null) //костыль
-                        {
-                            continue;
-                        }
                         if (figure.IsPointBelongToFigure(X,Y)) 
                         {
                             figure.IsSelected = !figure.IsSelected;
@@ -107,7 +103,10 @@ namespace Paint_V._2._0
 
         public void EndFigure() //заканчивает отрисовку текущей фигуры
         {
-            AddFigure(_storage.DrawingFigure);
+            if (_currentmode!=EIntaractionModes.Select&&_currentmode!=EIntaractionModes.Move) // виглядит костыльно, но это не костыль 
+            { 
+                AddFigure(_storage.DrawingFigure);
+            }
             _isMoving = false;
             _storage.DrawingFigure = null;
         }
@@ -126,7 +125,9 @@ namespace Paint_V._2._0
                     _storage.DrawingFigure.Width = X - _storage.DrawingFigure.X; //нам не нужно двигать первоначальную точку, мы только меняем размер елипса
                     _storage.DrawingFigure.Heigth = Y - _storage.DrawingFigure.Y;
                     break;
-                case EIntaractionModes.CreateRect:
+                case EIntaractionModes.CreateRectangle:
+                    _storage.DrawingFigure.Width = X - _storage.DrawingFigure.X; //нам не нужно двигать первоначальную точку, мы только меняем размер елипса
+                    _storage.DrawingFigure.Heigth = Y - _storage.DrawingFigure.Y;
                     break;
                 case EIntaractionModes.CreateCurve:
                     ((Curve)_storage.DrawingFigure).pointsList.Add(new Tuple<int,int>(X-_storage.DrawingFigure.X,Y-_storage.DrawingFigure.Y));
@@ -135,11 +136,9 @@ namespace Paint_V._2._0
                     //_storage.DrawingFigure.Width = Math.Max(X - _storage.DrawingFigure.X,_storage.DrawingFigure.Width);
                     //_storage.DrawingFigure.Heigth = Math.Max(Y - _storage.DrawingFigure.Y,_storage.DrawingFigure.Heigth);//ширина и высота фигуры для рамки
                     break;
-                case EIntaractionModes.CreateTiangle:
-                    break;
                 case EIntaractionModes.CreateHexagon:
                     break;
-                case EIntaractionModes.CreateRoundingRect:
+                case EIntaractionModes.CreateRoundingRectangle:
                     break;
                 case EIntaractionModes.Move:
                     if (!_isMoving) 
@@ -148,10 +147,6 @@ namespace Paint_V._2._0
                     }
                     foreach (var figure in _storage._figureHistory[_storage._currentIndex])//при движении перемещаем все выделенные обьекты
                     {
-                        if (figure==null) //костыль
-                        {
-                            continue;
-                        }
                         if (figure.IsSelected) 
                         {
                             figure.X += X-_moveLastX;

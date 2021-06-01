@@ -116,5 +116,10 @@ namespace Paint_V._2._0
                 MainPictureBox.Image.Save(saveFileDialog.FileName);
             }
         }
+
+        private void RectangleToolStripButton_Click(object sender, EventArgs e)
+        {
+            _engine._tool._currentmode = EIntaractionModes.CreateRectangle;
+        }
     }
 }

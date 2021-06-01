@@ -52,6 +52,7 @@
             this.CurrentColorPictureBox = new System.Windows.Forms.PictureBox();
             this.ColorLabel = new System.Windows.Forms.Label();
             this.ChangeColorLabel = new System.Windows.Forms.Label();
+            this.RectangleToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             this.ToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).BeginInit();
@@ -91,7 +92,7 @@
             // SaveToolStripMenuItem
             // 
             this.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
-            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.SaveToolStripMenuItem.Text = "Save";
             this.SaveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
@@ -124,6 +125,7 @@
             this.DotToolStripButton,
             this.EllipseToolStripButton,
             this.CurveToolStripButton,
+            this.RectangleToolStripButton,
             this.UndoToolStripButton,
             this.RedoToolStripButton});
             this.ToolStrip.Location = new System.Drawing.Point(0, 24);
@@ -274,6 +276,16 @@
             this.ChangeColorLabel.Text = "Change\r\nColor";
             this.ChangeColorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // RectangleToolStripButton
+            // 
+            this.RectangleToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.RectangleToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("RectangleToolStripButton.Image")));
+            this.RectangleToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.RectangleToolStripButton.Name = "RectangleToolStripButton";
+            this.RectangleToolStripButton.Size = new System.Drawing.Size(54, 60);
+            this.RectangleToolStripButton.Text = "RectangleToolStripButton";
+            this.RectangleToolStripButton.Click += new System.EventHandler(this.RectangleToolStripButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -332,6 +344,7 @@
         private System.Windows.Forms.ToolStripMenuItem ClearToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton UndoToolStripButton;
         private System.Windows.Forms.ToolStripButton RedoToolStripButton;
+        private System.Windows.Forms.ToolStripButton RectangleToolStripButton;
     }
 }
 

@@ -9,11 +9,10 @@ namespace Paint_V._2._0
     public enum EFigureType //для определения фигуры 
     {
         Dot,
-        Rect,
+        Rectangle,
         Ellipse,
         Curve,
         Line,
-        Triangle,
         Hexagon,
         RoundingRect
     }
