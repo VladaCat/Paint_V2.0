@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Paint_V._2._0
 {
     public interface IFigure
+        //:ICloneable
     {
         int X 
         { 
@@ -30,21 +31,6 @@ namespace Paint_V._2._0
             set;
         }
 
-        int ColorR 
-        { 
-            get;
-            set;
-        }
-        int ColorG 
-        { 
-            get;
-            set;
-        }
-        int ColorB 
-        { 
-            get;
-            set;
-        }
         int MyColorARGB 
         { 
             get;
@@ -61,7 +47,7 @@ namespace Paint_V._2._0
             get;
             set;
         }
-        bool IsSelected //выделена ли фигура
+        bool IsSelected //выделена ли фигура //используется при перемещении и отрисовке пунктирной рамки
         { 
             get;
             set;

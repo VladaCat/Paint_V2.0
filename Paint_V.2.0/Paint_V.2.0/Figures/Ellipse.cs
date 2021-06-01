@@ -8,16 +8,55 @@ namespace Paint_V._2._0
 {
     public class Ellipse : AbstractFigure
     {
-        public override EFigureType FigureType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
+        
+        public Ellipse(int X, int Y, int Width, int Height, int MyColorARGB, int Thickness) 
+        {
+            FigureType = EFigureType.Ellipse;
+            this.X = X;//this.X идет из AbstractFigure, X - параметр
+            this.Y = Y;
+            this.Thickness = Thickness;
+            this.MyColorARGB = MyColorARGB;
+            this.Width = Width;
+            this.Heigth = Height;
+        }
         public override bool IsPointBelongToFigure(int X, int Y)
         {
-            throw new NotImplementedException();
-        }
+            bool result = true;
+            if (Width > Heigth)
+            {
+                double maxFocusDistance = Math.Sqrt(Math.Pow((Width + Thickness / 2), 2) - Math.Pow((Heigth + Thickness / 2), 2)) / 2;
+                double minFocusDistance = Math.Sqrt(Math.Pow((Width - Thickness / 2), 2) - Math.Pow((Heigth - Thickness / 2), 2)) / 2;
 
-        public override bool IsSelected()
-        {
-            throw new NotImplementedException();
+                if (Math.Sqrt(Math.Pow(X - this.X - maxFocusDistance - Width / 2, 2) + Math.Pow(Y - Heigth / 2 - this.Y, 2))
+                    + Math.Sqrt(Math.Pow(X - this.X + maxFocusDistance - Width / 2, 2) + Math.Pow(Y - Heigth / 2 - this.Y, 2)) > Width + Thickness)
+                {
+                    result = false;
+                }
+                if (Math.Sqrt(Math.Pow(X - this.X - minFocusDistance - Width / 2, 2) + Math.Pow(Y - Heigth / 2 - this.Y, 2))
+                    + Math.Sqrt(Math.Pow(X - this.X + minFocusDistance - Width / 2, 2) + Math.Pow(Y - Heigth / 2 - this.Y, 2)) < Width - Thickness)
+                {
+                    result = false;
+                }
+                return result;
+            }
+            else 
+            {
+                double maxFocusDistance = Math.Sqrt(Math.Pow((Heigth + Thickness / 2), 2) - Math.Pow((Width + Thickness / 2), 2)) / 2;
+                double minFocusDistance = Math.Sqrt(Math.Pow((Heigth - Thickness / 2), 2) - Math.Pow((Width - Thickness / 2), 2)) / 2;
+
+                if (Math.Sqrt(Math.Pow(Y - this.Y - maxFocusDistance - Heigth / 2, 2) + Math.Pow(X - Width / 2 - this.X, 2))
+                    + Math.Sqrt(Math.Pow(Y - this.Y + maxFocusDistance - Heigth / 2, 2) + Math.Pow(X - Width / 2 - this.X, 2)) > Heigth + Thickness)
+                {
+                    result = false;
+                }
+                if (Math.Sqrt(Math.Pow(Y - this.Y - minFocusDistance - Heigth / 2, 2) + Math.Pow(X - Width / 2 - this.X, 2))
+                    + Math.Sqrt(Math.Pow(Y - this.Y + minFocusDistance - Heigth / 2, 2) + Math.Pow(X - Width / 2 - this.X, 2)) < Heigth - Thickness)
+                {
+                    result = false;
+                }
+                return result;
+            } 
         }
+      
     }
 }

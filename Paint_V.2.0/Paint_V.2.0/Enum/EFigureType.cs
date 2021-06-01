@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Paint_V._2._0
 {
-    public enum EFigureType
+    public enum EFigureType //для определения фигуры 
     {
         Dot,
         Rect,

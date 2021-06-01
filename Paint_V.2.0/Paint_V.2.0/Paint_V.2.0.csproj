@@ -52,7 +52,6 @@
     <Compile Include="Enum\EFigureType.cs" />
     <Compile Include="Figures\Ellipse.cs" />
     <Compile Include="Engine.cs" />
-    <Compile Include="Figures\Figure.cs" />
     <Compile Include="Figures\Hexagon.cs" />
     <Compile Include="IEngine.cs" />
     <Compile Include="Figures\IFigure.cs" />

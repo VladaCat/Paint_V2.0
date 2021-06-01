@@ -33,10 +33,16 @@
             this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SelectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MoveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ClearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStrip = new System.Windows.Forms.ToolStrip();
             this.DotToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.EllipseToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.CurveToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.UndoToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.RedoToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.MainPictureBox = new System.Windows.Forms.PictureBox();
-            this.SelectToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.ThicknessTrackBar = new System.Windows.Forms.TrackBar();
             this.MinimumSizeOfThickness = new System.Windows.Forms.Label();
             this.MaxsimumSizeOfThickness = new System.Windows.Forms.Label();
@@ -46,7 +52,6 @@
             this.CurrentColorPictureBox = new System.Windows.Forms.PictureBox();
             this.ColorLabel = new System.Windows.Forms.Label();
             this.ChangeColorLabel = new System.Windows.Forms.Label();
-            this.MoveToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             this.ToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).BeginInit();
@@ -58,7 +63,10 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.FileToolStripMenuItem});
+            this.FileToolStripMenuItem,
+            this.SelectToolStripMenuItem,
+            this.MoveToolStripMenuItem,
+            this.ClearToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(984, 24);
@@ -83,8 +91,30 @@
             // SaveToolStripMenuItem
             // 
             this.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
-            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.SaveToolStripMenuItem.Text = "Save";
+            this.SaveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
+            // 
+            // SelectToolStripMenuItem
+            // 
+            this.SelectToolStripMenuItem.Name = "SelectToolStripMenuItem";
+            this.SelectToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.SelectToolStripMenuItem.Text = "Select";
+            this.SelectToolStripMenuItem.Click += new System.EventHandler(this.SelectToolStripMenuItem_Click);
+            // 
+            // MoveToolStripMenuItem
+            // 
+            this.MoveToolStripMenuItem.Name = "MoveToolStripMenuItem";
+            this.MoveToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
+            this.MoveToolStripMenuItem.Text = "Move";
+            this.MoveToolStripMenuItem.Click += new System.EventHandler(this.MoveToolStripMenuItem_Click);
+            // 
+            // ClearToolStripMenuItem
+            // 
+            this.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem";
+            this.ClearToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.ClearToolStripMenuItem.Text = "Clear";
+            this.ClearToolStripMenuItem.Click += new System.EventHandler(this.ClearToolStripMenuItem_Click);
             // 
             // ToolStrip
             // 
@@ -92,8 +122,10 @@
             this.ToolStrip.ImageScalingSize = new System.Drawing.Size(50, 50);
             this.ToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.DotToolStripButton,
-            this.SelectToolStripButton,
-            this.MoveToolStripButton});
+            this.EllipseToolStripButton,
+            this.CurveToolStripButton,
+            this.UndoToolStripButton,
+            this.RedoToolStripButton});
             this.ToolStrip.Location = new System.Drawing.Point(0, 24);
             this.ToolStrip.Name = "ToolStrip";
             this.ToolStrip.Size = new System.Drawing.Size(984, 63);
@@ -111,6 +143,46 @@
             this.DotToolStripButton.Text = "DotToolStripButton";
             this.DotToolStripButton.Click += new System.EventHandler(this.DotToolStripButton_Click);
             // 
+            // EllipseToolStripButton
+            // 
+            this.EllipseToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.EllipseToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("EllipseToolStripButton.Image")));
+            this.EllipseToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.EllipseToolStripButton.Name = "EllipseToolStripButton";
+            this.EllipseToolStripButton.Size = new System.Drawing.Size(54, 60);
+            this.EllipseToolStripButton.Text = "EllipseToolStripButton";
+            this.EllipseToolStripButton.Click += new System.EventHandler(this.EllipseToolStripButton_Click);
+            // 
+            // CurveToolStripButton
+            // 
+            this.CurveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.CurveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("CurveToolStripButton.Image")));
+            this.CurveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CurveToolStripButton.Name = "CurveToolStripButton";
+            this.CurveToolStripButton.Size = new System.Drawing.Size(54, 60);
+            this.CurveToolStripButton.Text = "CurveToolStripButton";
+            this.CurveToolStripButton.Click += new System.EventHandler(this.CurveToolStripButton_Click);
+            // 
+            // UndoToolStripButton
+            // 
+            this.UndoToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.UndoToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("UndoToolStripButton.Image")));
+            this.UndoToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.UndoToolStripButton.Name = "UndoToolStripButton";
+            this.UndoToolStripButton.Size = new System.Drawing.Size(54, 60);
+            this.UndoToolStripButton.Text = "UndoToolStripButton";
+            this.UndoToolStripButton.Click += new System.EventHandler(this.UndoToolStripButton_Click);
+            // 
+            // RedoToolStripButton
+            // 
+            this.RedoToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.RedoToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("RedoToolStripButton.Image")));
+            this.RedoToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.RedoToolStripButton.Name = "RedoToolStripButton";
+            this.RedoToolStripButton.Size = new System.Drawing.Size(54, 60);
+            this.RedoToolStripButton.Text = "RedoToolStripButton";
+            this.RedoToolStripButton.Click += new System.EventHandler(this.RedoToolStripButton_Click);
+            // 
             // MainPictureBox
             // 
             this.MainPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -122,16 +194,6 @@
             this.MainPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainPictureBox_MouseDown);
             this.MainPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainPictureBox_MouseMove);
             this.MainPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainPictureBox_MouseUp);
-            // 
-            // SelectToolStripButton
-            // 
-            this.SelectToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.SelectToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("SelectToolStripButton.Image")));
-            this.SelectToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.SelectToolStripButton.Name = "SelectToolStripButton";
-            this.SelectToolStripButton.Size = new System.Drawing.Size(54, 60);
-            this.SelectToolStripButton.Text = "SelectToolStripButton";
-            this.SelectToolStripButton.Click += new System.EventHandler(this.SelectToolStripButton_Click);
             // 
             // ThicknessTrackBar
             // 
@@ -212,16 +274,6 @@
             this.ChangeColorLabel.Text = "Change\r\nColor";
             this.ChangeColorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // MoveToolStripButton
-            // 
-            this.MoveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MoveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("MoveToolStripButton.Image")));
-            this.MoveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.MoveToolStripButton.Name = "MoveToolStripButton";
-            this.MoveToolStripButton.Size = new System.Drawing.Size(54, 60);
-            this.MoveToolStripButton.Text = "MoveToolStripButton";
-            this.MoveToolStripButton.Click += new System.EventHandler(this.MoveToolStripButton_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -264,7 +316,6 @@
         private System.Windows.Forms.ToolStrip ToolStrip;
         private System.Windows.Forms.ToolStripButton DotToolStripButton;
         private System.Windows.Forms.PictureBox MainPictureBox;
-        private System.Windows.Forms.ToolStripButton SelectToolStripButton;
         private System.Windows.Forms.TrackBar ThicknessTrackBar;
         private System.Windows.Forms.Label MinimumSizeOfThickness;
         private System.Windows.Forms.Label MaxsimumSizeOfThickness;
@@ -274,7 +325,13 @@
         private System.Windows.Forms.PictureBox CurrentColorPictureBox;
         private System.Windows.Forms.Label ColorLabel;
         private System.Windows.Forms.Label ChangeColorLabel;
-        private System.Windows.Forms.ToolStripButton MoveToolStripButton;
+        private System.Windows.Forms.ToolStripButton EllipseToolStripButton;
+        private System.Windows.Forms.ToolStripButton CurveToolStripButton;
+        private System.Windows.Forms.ToolStripMenuItem SelectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem MoveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ClearToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton UndoToolStripButton;
+        private System.Windows.Forms.ToolStripButton RedoToolStripButton;
     }
 }
 

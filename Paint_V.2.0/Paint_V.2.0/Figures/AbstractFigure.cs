@@ -28,21 +28,7 @@ namespace Paint_V._2._0
             get;
             set;
         }
-        public int ColorR 
-        { 
-            get;
-            set;
-        }
-        public int ColorG 
-        { 
-            get;
-            set;
-        }
-        public int ColorB 
-        { 
-            get;
-            set;
-        }
+
         public int Thickness
         { 
             get;
@@ -53,7 +39,7 @@ namespace Paint_V._2._0
             get;
             set;
         }
-        public abstract EFigureType FigureType 
+        public EFigureType FigureType 
         { 
             get;
             set;
@@ -64,7 +50,11 @@ namespace Paint_V._2._0
             set;
         }
 
+        //public object Clone()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
         public abstract bool IsPointBelongToFigure(int X, int Y);
-        public abstract bool IsSelected();
     }
 }

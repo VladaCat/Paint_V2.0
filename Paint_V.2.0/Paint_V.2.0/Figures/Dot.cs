@@ -10,23 +10,18 @@ namespace Paint_V._2._0
     {
         public Dot(int X, int Y, int MyColorARGB, int Thickness)
         {
-            this.X = X-Thickness;
-            this.Y = Y-Thickness;
+            FigureType = EFigureType.Dot;
+            this.X = X;
+            this.Y = Y;
             this.Thickness = Thickness;
             this.MyColorARGB = MyColorARGB;
-            this.Width = Thickness * 2;
-            this.Heigth = Thickness * 2;
+            this.Width = 0;
+            this.Heigth = 0;
         }
 
-        public override EFigureType FigureType 
+        public override bool IsPointBelongToFigure(int X, int Y) //можно потестить
         {
-            get;
-            set;
-        }
-
-        public override bool IsPointBelongToFigure(int X, int Y)
-        {
-            if (Math.Sqrt(Math.Pow(this.X - X+Thickness, 2) + Math.Pow(this.Y - Y+Thickness, 2)) < this.Thickness)
+            if (Math.Sqrt(Math.Pow(this.X - X, 2) + Math.Pow(this.Y - Y, 2)) < this.Thickness/2)
             {
                 return true;
             }
@@ -34,11 +29,6 @@ namespace Paint_V._2._0
             { 
                 return false;
             }
-        }
-
-        public override bool IsSelected()
-        {
-            throw new NotImplementedException();
         }
     }
 }

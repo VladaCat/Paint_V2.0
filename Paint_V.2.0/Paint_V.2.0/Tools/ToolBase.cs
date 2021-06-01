@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Paint_V._2._0
 {
-    public class ToolBase : ITool
+    //часть выполняется тут, часть в Storage
+    public class ToolBase : ITool //исходя из того что приходит в Engine определяет что нужно делать
+        //на будущее как хочет Катя он будет отправлять что нужно сделать обратно в Engine, и оттуда оно будет идти
+        //делаться в Storage(в него переедут Add,Start,End,Update...)
+        //Сейчас он все меняет сам
     {
         private bool _isMoving=false;
         private int _moveLastX;
@@ -16,8 +20,13 @@ namespace Paint_V._2._0
             _storage = _history;
             Thickness = 1;
             MyColorARGB = 255<<24;//255*2^24
-
+            //_storage.NameAction += NamePrivateMethod;
+            
         }
+        //private _NamePrivateMethod; 
+        //не делать так чтобы все друг о друге знали.
+        //save helper, engine, graphica 
+        //пробовать общаться через Actions
         public Storage _storage 
         { 
             get;
@@ -39,27 +48,15 @@ namespace Paint_V._2._0
             set;
         }
 
+        //    //storage.remove //перенести логику в storage
+        //    //если нужно получить список фигур обращаться в сторейдж и делать соответствующую логику
+        //    //Storage в сингл тоне, чтобы о нем знала бизнес логика и инженерия
+        //    //лист приватный в строрейдж
         public void AddFigure(IFigure figure)
         {
-            if (_storage._figureHistory.Count>++_storage._currentIndex) 
-            {      
-            _storage._figureHistory.RemoveRange(_storage._currentIndex, _storage._figureHistory.Count - _storage._currentIndex); //It will be handed down in separate function
-            }
-            if (_storage._figureHistory.Count>0)
-            { 
-            _storage._figureHistory.Add(new List<IFigure>(_storage._figureHistory.Last())); //Copy last state of figure history
-            }
-            else 
-            { 
-                _storage._figureHistory.Add(new List<IFigure>());
-            }
-            _storage._figureHistory.Last().Add(figure); // change last state        
+            _storage.AddFigure(figure);      
         }
-        //public void CreateFigure(int Xstart, int Ystart, int Xend, int Yend) 
-        //{
-           
-        //}
-
+        
         public void StartCreateFigure(int X, int Y)
         {
             IFigure _figure = null;
@@ -72,10 +69,12 @@ namespace Paint_V._2._0
                 case EIntaractionModes.CreateLine:
                     break;
                 case EIntaractionModes.CreateEllipse:
+                    _figure = new Ellipse(X,Y,0,0,MyColorARGB,Thickness);//0,0 потому что только начинаем создавать
                     break;
                 case EIntaractionModes.CreateRect:
                     break;
                 case EIntaractionModes.CreateCurve:
+                    _figure = new Curve(X,Y,MyColorARGB,Thickness);
                     break;
                 case EIntaractionModes.CreateTiangle:
                     break;
@@ -106,28 +105,35 @@ namespace Paint_V._2._0
             _storage.DrawingFigure = _figure;
         }
 
-        public void EndFigure()
+        public void EndFigure() //заканчивает отрисовку текущей фигуры
         {
             AddFigure(_storage.DrawingFigure);
             _isMoving = false;
             _storage.DrawingFigure = null;
         }
 
-        public void UpdateFigure(int X, int Y)
+        public void UpdateFigure(int X, int Y) //при движениях мышки меняет фигуру
         {
             switch (_currentmode)
             {
                 case EIntaractionModes.CreateDot:
-                    _storage.DrawingFigure.X = X-Thickness;
-                    _storage.DrawingFigure.Y = Y-Thickness;
+                    _storage.DrawingFigure.X = X;
+                    _storage.DrawingFigure.Y = Y;
                     break;
                 case EIntaractionModes.CreateLine:
                     break;
                 case EIntaractionModes.CreateEllipse:
+                    _storage.DrawingFigure.Width = X - _storage.DrawingFigure.X; //нам не нужно двигать первоначальную точку, мы только меняем размер елипса
+                    _storage.DrawingFigure.Heigth = Y - _storage.DrawingFigure.Y;
                     break;
                 case EIntaractionModes.CreateRect:
                     break;
                 case EIntaractionModes.CreateCurve:
+                    ((Curve)_storage.DrawingFigure).pointsList.Add(new Tuple<int,int>(X-_storage.DrawingFigure.X,Y-_storage.DrawingFigure.Y));
+                    //_storage.DrawingFigure.X = Math.Min(X,_storage.DrawingFigure.X);//начинается ПИЗДЕЦ,ПИЗДЕЦ и еще раз ПИЗДЕЦ для красивой рамочки выделения
+                    //_storage.DrawingFigure.Y = Math.Min(Y, _storage.DrawingFigure.Y);// стартовые точки для рамки
+                    //_storage.DrawingFigure.Width = Math.Max(X - _storage.DrawingFigure.X,_storage.DrawingFigure.Width);
+                    //_storage.DrawingFigure.Heigth = Math.Max(Y - _storage.DrawingFigure.Y,_storage.DrawingFigure.Heigth);//ширина и высота фигуры для рамки
                     break;
                 case EIntaractionModes.CreateTiangle:
                     break;
@@ -140,7 +146,7 @@ namespace Paint_V._2._0
                     {
                         break;
                     }
-                    foreach (var figure in _storage._figureHistory[_storage._currentIndex])
+                    foreach (var figure in _storage._figureHistory[_storage._currentIndex])//при движении перемещаем все выделенные обьекты
                     {
                         if (figure==null) //костыль
                         {

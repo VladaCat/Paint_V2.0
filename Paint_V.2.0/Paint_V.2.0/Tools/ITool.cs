@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Paint_V._2._0
 {
-    public enum EIntaractionModes //intaraction with figures
+    public enum EIntaractionModes //intaraction with figures (принимает все что приходит из UI)
     {
         CreateDot,
         CreateLine,

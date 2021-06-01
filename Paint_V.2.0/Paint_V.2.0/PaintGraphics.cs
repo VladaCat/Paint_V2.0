@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace Paint_V._2._0
 {
-    public class PaintGraphics : IPaintGraphics
+    //из Engine берем Storage и закидываем в PG
+    //PG зависит от UI
+    public class PaintGraphics : IPaintGraphics //отрисовка Storage
     {
         private Size _sizeOfPictureBox;
 
@@ -31,37 +33,96 @@ namespace Paint_V._2._0
             //_graphics = Graphics.FromImage(_bitmap);
         }
 
-        public void MyDrawFigure(IFigure figure, Graphics graphics)
+        public void MyDrawFigure(IFigure figure, Graphics graphics)//отрисовывает только одну фигуру
         {
             if (figure==null) //костыль
             { 
                 return;
             }
-            if (figure.IsSelected)
+            if (figure.IsSelected) //для рамочки на выделение
             {
                 Pen SelectionPen = new Pen(Color.Black);
                 SelectionPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-                graphics.DrawRectangle(SelectionPen,
-               figure.X,
-               figure.Y,
-               figure.Width,
-               figure.Heigth);
+                switch (figure.FigureType)
+                {
+                    case EFigureType.Dot:
+                        graphics.DrawRectangle(SelectionPen,
+                        figure.X - figure.Thickness / 2,
+                        figure.Y - figure.Thickness / 2,
+                        figure.Thickness,
+                        figure.Thickness);
+                        break;
+                    case EFigureType.Rect:
+                        break;
+                    case EFigureType.Ellipse:
+                        graphics.DrawRectangle(SelectionPen,
+                        figure.X,
+                        figure.Y,
+                        figure.Width,
+                        figure.Heigth);
+                        break;
+                    case EFigureType.Curve:
+                        int Xmin=figure.X;
+                        int Ymin=figure.Y;
+                        int Xmax=figure.X;
+                        int Ymax=figure.Y;
+                        foreach (var point in ((Curve)figure).pointsList)
+                        {
+                            Xmin = Math.Min(Xmin, point.Item1);
+                            Ymin = Math.Min(Ymin, point.Item2);
+                            Xmax = Math.Max(Xmax, point.Item1);
+                            Ymax = Math.Max(Ymax, point.Item2);
+                        }
+                        graphics.DrawRectangle(SelectionPen,
+                        Xmin + figure.X,
+                        Ymin + figure.Y,
+                        Xmax - Xmin + figure.X,
+                        Ymax - Ymin + figure.Y);
+                        break;
+                    case EFigureType.Line:
+                        break;
+                    case EFigureType.Triangle:
+                        break;
+                    case EFigureType.Hexagon:
+                        break;
+                    case EFigureType.RoundingRect:
+                        break;
+                    default:
+                        break;
+                }
             }
            
             switch (figure.FigureType)
             {
                 case EFigureType.Dot:
-                    graphics.FillEllipse(new SolidBrush(Color.FromArgb(figure.MyColorARGB)),
-                        figure.X,
-                        figure.Y,
-                        figure.Width,
-                        figure.Heigth);
+                    graphics.FillEllipse(new SolidBrush(Color.FromArgb(figure.MyColorARGB)),//Brush для заливки
+                        figure.X-figure.Thickness/2,
+                        figure.Y-figure.Thickness/2,
+                        figure.Thickness,
+                        figure.Thickness);
                     break;
                 case EFigureType.Rect:
                     break;
                 case EFigureType.Ellipse:
+                    graphics.DrawEllipse(new Pen(Color.FromArgb(figure.MyColorARGB),figure.Thickness),//Pen для рисования линии
+                       figure.X,
+                       figure.Y,
+                       figure.Width,
+                       figure.Heigth);
                     break;
                 case EFigureType.Curve:
+                    Curve curve = (Curve)figure;
+                    if (curve.pointsList.Count > 1) 
+                    {
+                        for (int i = 0; i < curve.pointsList.Count - 1; i++) 
+                        {
+                            graphics.DrawLine(new Pen(Color.FromArgb(figure.MyColorARGB), figure.Thickness),
+                                curve.pointsList[i].Item1+figure.X,
+                                curve.pointsList[i].Item2+figure.Y,
+                                curve.pointsList[i + 1].Item1 + figure.X,
+                                curve.pointsList[i + 1].Item2 + figure.Y); //берем из кортежа, Item1 - X, Item2 - Y
+                        }
+                    }
                     break;
                 case EFigureType.Line:
                     break;
@@ -76,18 +137,16 @@ namespace Paint_V._2._0
             }
         }
 
-        public Bitmap MyDrawFigures(Storage storage)
+        public Bitmap MyDrawFigures(Storage storage)//отрисовывает все фигуры Storage 
         {
             Bitmap _bitmap = new Bitmap(_sizeOfPictureBox.Width,_sizeOfPictureBox.Height);
             Graphics graphics = Graphics.FromImage(_bitmap);
-            if (storage._figureHistory.Count!=0 && storage._figureHistory.Last().Count != 0) 
-            {
-                foreach (var figure in storage._figureHistory.Last())
+               
+            foreach (var figure in storage.GetCurrentFigures())
                 {
                     MyDrawFigure(figure, graphics);
                 }
-               
-            }
+
             if (storage.DrawingFigure!=null) 
             {
                 MyDrawFigure(storage.DrawingFigure, graphics);

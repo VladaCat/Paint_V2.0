@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Paint_V._2._0
 {
-    public class Engine
+    public class Engine // принимает значения UI и раскидывает остальным 
+        //не зависит от платформы и все его последющие
     {
         public Storage _history;
         
